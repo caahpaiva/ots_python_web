@@ -2,23 +2,22 @@ from flask import Flask, render_template
 
 app = Flask("Meu App")
 
-
 posts = [
     {
-        "titulo": "Minha primeira postagem", 
+        "titulo": "Minha primeira postagem",
         "texto": "teste"
     },
     {
         "titulo": "Segundo Post",
-        "texto": "outro teste"
-    },
-
+        'texto': "outro teste"
+    }
 ]
 
 @app.route('/')
 def exibir_entradas():
     entradas = posts # Mock das postagens
     return render_template('exibir_entradas.html', entradas=entradas)
+
 
 @app.route('/layout')
 def layout():
@@ -27,3 +26,7 @@ def layout():
 @app.route('/outro')
 def outro():
     return render_template('outro_template.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
