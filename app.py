@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, session, flash, redirect, url_for
 
 app = Flask("Meu App")
+app.config['SECRET_KEY'] = 'pudim'
 
 posts = [
     {
@@ -27,6 +28,13 @@ def layout():
 def outro():
     return render_template('outro_template.html')
 
-@app.route('/login')
+@app.route('/login', methods=["GET", "POST"])
 def login():
-    return render_template('login.html')
+    erro = None
+    if request.method == "POST":
+        if request.form['username']  == "admin" and request.form['password'] == "admin":
+            session['logado'] = True
+            flash("Login efetuado com sucesso!")
+            return render_template('exibir_entradas.html')
+        erro = "Usuário ou senha inválidos"        
+    return render_template('login.html', erro=erro)
